@@ -9,7 +9,7 @@ const Movie = (props) => {
   const { _id, name, director, description, price, image } = props.movie;
   const handleCart = props.handleCart;
 
-  const deleteHandler = async () => {
+  const deleteHandler = async () => {//http://localhost:8080/api/movies
     await axios
       .delete(`http://localhost:5000/movies/${_id}`)
       .then((res) => res.data)
