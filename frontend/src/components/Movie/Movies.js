@@ -1,7 +1,8 @@
 import React from "react";
-import axios from "axios";
 import "./Movie.css";
 import Movie from "./Movie";
+import { Button, Typography, Box } from "@mui/material";
+import { margin } from "@mui/system";
 
 const URL = "http://localhost:5000/movies";
 

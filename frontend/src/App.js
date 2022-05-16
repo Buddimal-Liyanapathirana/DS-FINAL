@@ -17,10 +17,10 @@ const URL = "http://localhost:5000/movies";
 const App = () => {
   const [cart, setCart] = useState([]);
   const [movies, setMovies] = useState();
-  //t
+
   useEffect(() => {
     fetchHandler().then((data) => setMovies(data.movies));
-  }, [movies]);
+  }, []); //add movies inside dependancy array to render movie updates in real time
 
   const fetchHandler = async () => {
     return await axios.get(URL).then((res) => res.data);
@@ -44,10 +44,31 @@ const App = () => {
     setCart([...arr]);
   };
 
+  const filterContent = (movies, searchKey) => {
+    // checks if an item name includes the value search field , then pass the matched items to the state
+    console.log("filtercontent", movies, " and ", searchKey);
+    const result = movies.filter(
+      (movie) =>
+        movie.name.toLowerCase().includes(searchKey) ||
+        movie.name.includes(searchKey)
+    );
+    console.log("result", result);
+    setMovies(result);
+  };
+
+  const handleSearch = (e) => {
+    // executes when the value in search field is changed
+    const searchKey = e.target.value;
+    axios.get(URL).then((res) => filterContent(res.data.movies, searchKey));
+  };
+
+  // if (movies.length === 0)
+  //   return <React.Fragment>No movies available</React.Fragment>;
+
   return (
     <React.Fragment>
       <header>
-        <Header />
+        <Header movies={movies} handleSearch={handleSearch} />
       </header>
       <main>
         <Routes>
